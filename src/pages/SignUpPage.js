@@ -1,17 +1,57 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import MyWalletLogo from "../components/CatPotionsLogo"
+import CatPotionsLogo from "../components/CatPotionsLogo"
+import { useRef } from "react";
 
 export default function SignUpPage() {
+
+  const form = {name: "", email:"", password:""}
+  const nameRef = useRef("");
+  const emailRef = useRef("");
+  const passwordRef = useRef("");
+  const doublePasswordRef = useRef("")
+  const navigate = useNavigate();
+
+
+  const buttonClick = () =>{
+    form.name = nameRef.current.value;
+    form.email = emailRef.current.value;
+    if(passwordRef.current.value === doublePasswordRef.current.value){
+      form.password = passwordRef.current.value;
+    }else{
+      alert("Senha e confirmação de senha devem ser iguais!")
+    }
+  }
+
+  /* const request = () =>{
+    const url = "INSERIR URL DO BACK";
+    axios.post(url, form)
+      .then((res)=>{
+        console.log(res)
+        navigate("/")
+      })
+      .catch((err)=>{
+        alert(err.response.data)
+      })
+  } */
+
+  const register = (e) =>{
+    e.preventDefault();
+    buttonClick();
+    if(form.email===""||form.name===""||form.password==="")return alert("Todos os campos devem ser preenchidos")
+    navigate("/login")
+    //request();
+  }
+
   return (
     <SingUpContainer>
-      <form>
-        <MyWalletLogo />
-        <input placeholder="Nome" type="text" />
-        <input placeholder="E-mail" type="email" />
-        <input placeholder="Senha" type="password" autocomplete="new-password" />
-        <input placeholder="Confirme a senha" type="password" autocomplete="new-password" />
-        <button>Cadastrar</button>
+      <form onSubmit={register}>
+        <CatPotionsLogo />
+        <input placeholder="Nome" type="text" ref={nameRef} />
+        <input placeholder="E-mail" type="email" ref={emailRef} />
+        <input placeholder="Senha" type="password" autoComplete="new-password" ref={passwordRef}/>
+        <input placeholder="Confirme a senha" type="password" autoComplete="new-password" ref={doublePasswordRef}/>
+        <button type="submit">Cadastrar</button>
       </form>
 
       <Link to="/login">

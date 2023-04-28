@@ -3,11 +3,11 @@ import styled from "styled-components"
 export default function ShoppingBagPage() {
   return (
     <ShoppingBagContainer>
-      <h1>Nova TRANSAÇÃO</h1>
+      <h1>Carrinho de Compras</h1>
       <form>
-        <input placeholder="Valor" type="text"/>
-        <input placeholder="Descrição" type="text" />
-        <button>Salvar TRANSAÇÃO</button>
+        <span>Aqui será listado os produtos</span>
+        
+        <button>FINALIZAR COMPRA</button>
       </form>
     </ShoppingBagContainer>
   )
