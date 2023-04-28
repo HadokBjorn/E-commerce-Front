@@ -23,6 +23,7 @@ export default function HomePage() {
               <strong>Nome do Produto</strong>
             </div>
             <Value>120,00</Value>
+            <button>Adicionar ao Carrinho</button>
           </ListItemContainer>
           <ListItemContainer>
             <div>
@@ -30,6 +31,7 @@ export default function HomePage() {
               <strong>Nome do Produto</strong>
             </div>
             <Value>120,00</Value>
+            <button>Adicionar ao Carrinho</button>
           </ListItemContainer>
           <ListItemContainer>
             <div>
@@ -37,6 +39,7 @@ export default function HomePage() {
               <strong>Nome do Produto</strong>
             </div>
             <Value>120,00</Value>
+            <button>Adicionar ao Carrinho</button>
           </ListItemContainer>
           <ListItemContainer>
             <div>
@@ -44,6 +47,7 @@ export default function HomePage() {
               <strong>Nome do Produto</strong>
             </div>
             <Value>120,00</Value>
+            <button>Adicionar ao Carrinho</button>
           </ListItemContainer>
           <ListItemContainer>
             <div>
@@ -51,6 +55,7 @@ export default function HomePage() {
               <strong>Nome do Produto</strong>
             </div>
             <Value>120,00</Value>
+            <button>Adicionar ao Carrinho</button>
           </ListItemContainer>
           <ListItemContainer>
             <div>
@@ -58,6 +63,7 @@ export default function HomePage() {
               <strong>Nome do Produto</strong>
             </div>
             <Value>120,00</Value>
+            <button>Adicionar ao Carrinho</button>
           </ListItemContainer>
           <ListItemContainer>
             <div>
@@ -65,7 +71,25 @@ export default function HomePage() {
               <strong>Nome do Produto</strong>
             </div>
             <Value>120,00</Value>
+            <button>Adicionar ao Carrinho</button>
           </ListItemContainer>
+          <ListItemContainer>
+            <div>
+              <img src="https://i.pinimg.com/564x/90/3e/04/903e04af1b0ad325cd94d3b5319bbafa.jpg" alt=""/>
+              <strong>Nome do Produto</strong>
+            </div>
+            <Value>120,00</Value>
+            <button>Adicionar ao Carrinho</button>
+          </ListItemContainer>
+          <ListItemContainer>
+            <div>
+              <img src="https://i.pinimg.com/564x/90/3e/04/903e04af1b0ad325cd94d3b5319bbafa.jpg" alt=""/>
+              <strong>Nome do Produto</strong>
+            </div>
+            <Value>120,00</Value>
+            <button>Adicionar ao Carrinho</button>
+          </ListItemContainer>
+          
         </ul>
       </ProductsContainer>
 
@@ -157,13 +181,14 @@ const ButtonsContainer = styled.section`
     }
   }
 `
-const Value = styled.div`
+const Value = styled.p`
   font-size: 16px;
   text-align: right;
   font-weight: 700;
 `
 const ListItemContainer = styled.li`
   background-color: #5c5c5c;
+  border-radius: 15px;
   display: flex;
   height: 325px;
   width: 235px;
@@ -174,19 +199,25 @@ const ListItemContainer = styled.li`
   color: #fff;
   gap: 10px;
   div{
-    margin-top: 5px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 5px;
+
+    img{
+      width: 100%;
+      height: 200px;
+      border-radius: 15px;
+      object-fit: cover;
+    }
   }
   span {
     color: #c6c6c6;
   }
-  img{
-    width: 100%;
-    object-fit: cover;
-    height: 200px;
+  button{
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
   }
 `
