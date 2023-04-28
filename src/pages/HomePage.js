@@ -11,7 +11,7 @@ export default function HomePage() {
     <HomeContainer>
       <Header>
         <CatPotionsLogo classe={"row-logo"}/>
-        <h1 onClick={navigate("/login")}>Olá, Usuário</h1>
+        <h1 onClick={()=>navigate("/login")}>Olá, Usuário</h1>
         <BiExit />
       </Header>
 
