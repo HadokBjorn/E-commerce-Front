@@ -123,8 +123,6 @@ const ProductsContainer = styled.article`
   border-radius: 5px;
   padding: 16px;
  ul{
-  overflow: auto;
-  height: 900px;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
