@@ -148,7 +148,7 @@ const ButtonsContainer = styled.section`
     gap: 5px;
     
     img{
-      width: 45%;
+      width: 80px;
       border-radius: 50%;      
     }
     p {
