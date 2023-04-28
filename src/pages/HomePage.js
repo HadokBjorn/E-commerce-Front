@@ -3,13 +3,15 @@ import { BiExit } from "react-icons/bi"
 import greenPotion from "../assets/green-potion.jpg"
 import purpplePotion from "../assets/purpple-potion.jpg"
 import CatPotionsLogo from "../components/CatPotionsLogo"
+import { useNavigate } from "react-router-dom"
 
 export default function HomePage() {
+  const navigate = useNavigate();
   return (
     <HomeContainer>
       <Header>
         <CatPotionsLogo classe={"row-logo"}/>
-        <h1>Olá, Fulano</h1>
+        <h1 onClick={navigate("/login")}>Olá, Usuário</h1>
         <BiExit />
       </Header>
 
