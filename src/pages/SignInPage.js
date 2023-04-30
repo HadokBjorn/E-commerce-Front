@@ -61,4 +61,8 @@ const SingInContainer = styled.section`
   form{
     margin-bottom: 10px;
   }
+  input::placeholder{
+    color: green;
+    font-weight: 700;
+  }
 `

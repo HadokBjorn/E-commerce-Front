@@ -5,9 +5,10 @@ import { useRef } from "react";
 
 export default function SignUpPage() {
 
-  const form = {name: "", email:"", password:""}
+  const form = {name: "", email:"",address:"", password:""}
   const nameRef = useRef("");
   const emailRef = useRef("");
+  const addressRef = useRef("");
   const passwordRef = useRef("");
   const doublePasswordRef = useRef("")
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ export default function SignUpPage() {
   const buttonClick = () =>{
     form.name = nameRef.current.value;
     form.email = emailRef.current.value;
+    form.address = addressRef.current.value;
     if(passwordRef.current.value === doublePasswordRef.current.value){
       form.password = passwordRef.current.value;
     }else{
@@ -38,7 +40,7 @@ export default function SignUpPage() {
   const register = (e) =>{
     e.preventDefault();
     buttonClick();
-    if(form.email===""||form.name===""||form.password==="")return alert("Todos os campos devem ser preenchidos")
+    if(form.email===""||form.name===""||form.password===""||form.address==="")return alert("Todos os campos devem ser preenchidos")
     navigate("/login")
     //request();
   }
@@ -49,6 +51,7 @@ export default function SignUpPage() {
         <CatPotionsLogo />
         <input placeholder="Nome" type="text" ref={nameRef} />
         <input placeholder="E-mail" type="email" ref={emailRef} />
+        <input placeholder="Endereço" type="text" ref={addressRef} />
         <input placeholder="Senha" type="password" autoComplete="new-password" ref={passwordRef}/>
         <input placeholder="Confirme a senha" type="password" autoComplete="new-password" ref={doublePasswordRef}/>
         <button type="submit">Cadastrar</button>
@@ -69,5 +72,9 @@ const SingUpContainer = styled.section`
   align-items: center;
   form{
     margin-bottom: 10px;
+  }
+  input::placeholder{
+    color: green;
+    font-weight: 700;
   }
 `
