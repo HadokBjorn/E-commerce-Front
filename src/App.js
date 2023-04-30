@@ -3,7 +3,6 @@ import styled from "styled-components"
 import HomePage from "./pages/HomePage"
 import SignInPage from "./pages/SignInPage"
 import SignUpPage from "./pages/SignUpPage"
-import { BiShoppingBag } from "react-icons/bi"
 
 export default function App() {
   return (
@@ -13,7 +12,6 @@ export default function App() {
           <Route path="/login" element={<SignInPage />} />
           <Route path="/cadastro" element={<SignUpPage />} />
           <Route path="/" element={<HomePage />} />
-          <Route path="/nova-transacao/:tipo" element={<BiShoppingBag />} />
         </Routes>
       </BrowserRouter>
     </PagesContainer>

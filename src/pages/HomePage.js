@@ -1,19 +1,25 @@
 import styled from "styled-components"
-import { BiExit } from "react-icons/bi"
+import { BiCart, BiExit } from "react-icons/bi"
 import greenPotion from "../assets/green-potion.jpg"
 import purpplePotion from "../assets/purpple-potion.jpg"
 import CatPotionsLogo from "../components/CatPotionsLogo"
+import ShoppingBagSidebar from "../components/ShoppingBagSidebar"
 import { useNavigate } from "react-router-dom"
+import { useState } from "react"
 
 export default function HomePage() {
   const navigate = useNavigate();
+  const [sideBar, setSideBar] = useState(false);
   return (
     <HomeContainer>
       <Header>
         <CatPotionsLogo classe={"row-logo"}/>
         <h1 onClick={()=>navigate("/login")}>Olá, Usuário</h1>
+        <BiCart size={"30"} onClick={()=>setSideBar(true)}/>
         <BiExit />
       </Header>
+      {sideBar===true?<ShoppingBagSidebar setSideBar={setSideBar}/>:""}
+      
 
       <ProductsContainer>
         <ul>
@@ -110,6 +116,7 @@ export default function HomePage() {
 }
 
 const HomeContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   height: calc(100vh - 50px);
