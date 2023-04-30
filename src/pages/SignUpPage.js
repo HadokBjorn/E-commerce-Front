@@ -5,8 +5,8 @@ import { useRef } from "react";
 
 export default function SignUpPage() {
 
-  const form = {name: "", email:"",address:"", password:""}
-  const nameRef = useRef("");
+  const form = { userName: "", email: "", address: "", password: "" }
+  const userNameRef = useRef("");
   const emailRef = useRef("");
   const addressRef = useRef("");
   const passwordRef = useRef("");
@@ -14,13 +14,13 @@ export default function SignUpPage() {
   const navigate = useNavigate();
 
 
-  const buttonClick = () =>{
-    form.name = nameRef.current.value;
+  const buttonClick = () => {
+    form.userName = userNameRef.current.value;
     form.email = emailRef.current.value;
     form.address = addressRef.current.value;
-    if(passwordRef.current.value === doublePasswordRef.current.value){
+    if (passwordRef.current.value === doublePasswordRef.current.value) {
       form.password = passwordRef.current.value;
-    }else{
+    } else {
       alert("Senha e confirmação de senha devem ser iguais!")
     }
   }
@@ -37,10 +37,10 @@ export default function SignUpPage() {
       })
   } */
 
-  const register = (e) =>{
+  const register = (e) => {
     e.preventDefault();
     buttonClick();
-    if(form.email===""||form.name===""||form.password===""||form.address==="")return alert("Todos os campos devem ser preenchidos")
+    if (form.email === "" || form.userName === "" || form.password === "" || form.address === "") return alert("Todos os campos devem ser preenchidos")
     navigate("/login")
     //request();
   }
@@ -49,11 +49,11 @@ export default function SignUpPage() {
     <SingUpContainer>
       <form onSubmit={register}>
         <CatPotionsLogo />
-        <input placeholder="Nome" type="text" ref={nameRef} />
+        <input placeholder="Nome" type="text" ref={userNameRef} />
         <input placeholder="E-mail" type="email" ref={emailRef} />
         <input placeholder="Endereço" type="text" ref={addressRef} />
-        <input placeholder="Senha" type="password" autoComplete="new-password" ref={passwordRef}/>
-        <input placeholder="Confirme a senha" type="password" autoComplete="new-password" ref={doublePasswordRef}/>
+        <input placeholder="Senha" type="password" autoComplete="new-password" ref={passwordRef} />
+        <input placeholder="Confirme a senha" type="password" autoComplete="new-password" ref={doublePasswordRef} />
         <button type="submit">Cadastrar</button>
       </form>
 
