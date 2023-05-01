@@ -5,11 +5,13 @@ import purpplePotion from "../assets/purpple-potion.jpg"
 import CatStoreLogo from "../components/CatStoreLogo"
 import ShoppingBagSidebar from "../components/ShoppingBagSidebar"
 import { useNavigate } from "react-router-dom"
-import { useRef, useState } from "react"
+import { useContext, useRef, useState } from "react"
 import produtos from "../mock/mock"
+import AuthContext from "../constexts/AuthContext"
 
 export default function HomePage() {
   const navigate = useNavigate();
+  const { userName } = useContext(AuthContext);
   const [sideBar, setSideBar] = useState(false);
   //const [shoppingList, setShoppingList] = useState(null)
   const cardRef = useRef();
@@ -21,29 +23,29 @@ export default function HomePage() {
   return (
     <HomeContainer>
       <Header>
-        <CatStoreLogo classe={"row-logo"}/>
-        <h1 onClick={()=>navigate("/login")}>Olá, Usuário</h1>
-        <BiCart size={"30"} onClick={()=>setSideBar(true)}/>
+        <CatStoreLogo classe={"row-logo"} />
+        <h1 onClick={() => navigate("/login")}>Olá, {userName ? userName : "Usuário"}</h1>
+        <BiCart size={"30"} onClick={() => setSideBar(true)} />
         <BiExit />
       </Header>
-      {sideBar===true?<ShoppingBagSidebar setSideBar={setSideBar}/>:""}
-      
+      {sideBar === true ? <ShoppingBagSidebar setSideBar={setSideBar} /> : ""}
+
 
       <ProductsContainer>
         <ul>
           {
-            produtos.map((product, i)=>(
+            produtos.map((product, i) => (
               <ListItemContainer key={i} onClick={clickItem} ref={cardRef}>
                 <div>
-                  <img src={product.image} alt=""/>
+                  <img src={product.image} alt="" />
                   <strong>{product.product}</strong>
                 </div>
-                <Value>R$ {product.value.toFixed(2).replace(".",",")}</Value>
+                <Value>R$ {product.value.toFixed(2).replace(".", ",")}</Value>
                 <button>Adicionar ao Carrinho</button>
               </ListItemContainer>
             ))
           }
-          
+
         </ul>
       </ProductsContainer>
 
@@ -54,7 +56,7 @@ export default function HomePage() {
           <p>ITENS ENCANTADOS</p>
         </button>
         <button>
-          <img src={purpplePotion} alt=""/>
+          <img src={purpplePotion} alt="" />
           <p>RELIQUIAS ALMADIÇOADAS</p>
         </button>
       </ButtonsContainer>
