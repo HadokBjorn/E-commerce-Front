@@ -31,13 +31,11 @@ export default function SignUpPage() {
     const url = `${process.env.REACT_APP_API_URL}/sign-up`;
     axios.post(url, form)
       .then((res) => {
-        console.log(form)
         console.log(res)
         navigate("/login");
       })
       .catch((err) => {
-        console.log(form)
-        console.log(err)
+        alert(err.response.data);
       })
   }
 
