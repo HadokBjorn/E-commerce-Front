@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import CatStoreLogo from "../components/CatStoreLogo"
 import { useRef } from "react";
+import axios from "axios";
+
 
 export default function SignUpPage() {
 
@@ -25,24 +27,25 @@ export default function SignUpPage() {
     }
   }
 
-  /* const request = () =>{
-    const url = "INSERIR URL DO BACK";
+  const request = () => {
+    const url = `${process.env.REACT_APP_API_URL}/sign-up`;
     axios.post(url, form)
-      .then((res)=>{
+      .then((res) => {
+        console.log(form)
         console.log(res)
-        navigate("/")
+        navigate("/login");
       })
-      .catch((err)=>{
-        alert(err.response.data)
+      .catch((err) => {
+        console.log(form)
+        console.log(err)
       })
-  } */
+  }
 
   const register = (e) => {
     e.preventDefault();
     buttonClick();
     if (form.email === "" || form.userName === "" || form.password === "" || form.address === "") return alert("Todos os campos devem ser preenchidos")
-    navigate("/login")
-    //request();
+    request();
   }
 
   return (
