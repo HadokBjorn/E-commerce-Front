@@ -8,8 +8,10 @@ import { useNavigate } from "react-router-dom"
 import { useContext, useRef, useState } from "react"
 import produtos from "../mock/mock"
 import AuthContext from "../constexts/AuthContext"
+import axios from "axios"
 
 export default function HomePage() {
+  const { token } = useContext(AuthContext);
   const navigate = useNavigate();
   const { userName } = useContext(AuthContext);
   const [sideBar, setSideBar] = useState(false);
@@ -17,8 +19,20 @@ export default function HomePage() {
   const cardRef = useRef();
 
   const clickItem = product => {
-    const cardSelected = product;
-    console.log(cardSelected)
+    if (!userName) return navigate("/login");
+    request(product);
+  }
+
+  const request = (product) => {
+    const config = { headers: { Authorization: `Bearer ${token}` } }
+    const url = `${process.env.REACT_APP_API_URL}/shopping`;
+    axios.post(url, { name: product.product, value: product.value }, config)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
   return (
     <HomeContainer>
