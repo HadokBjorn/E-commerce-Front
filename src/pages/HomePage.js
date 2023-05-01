@@ -2,18 +2,26 @@ import styled from "styled-components"
 import { BiCart, BiExit } from "react-icons/bi"
 import greenPotion from "../assets/green-potion.jpg"
 import purpplePotion from "../assets/purpple-potion.jpg"
-import CatPotionsLogo from "../components/CatPotionsLogo"
+import CatStoreLogo from "../components/CatStoreLogo"
 import ShoppingBagSidebar from "../components/ShoppingBagSidebar"
 import { useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { useRef, useState } from "react"
+import produtos from "../mock/mock"
 
 export default function HomePage() {
   const navigate = useNavigate();
   const [sideBar, setSideBar] = useState(false);
+  //const [shoppingList, setShoppingList] = useState(null)
+  const cardRef = useRef();
+
+  const clickItem = () => {
+    const cardSelected = cardRef.current;
+    console.log(cardSelected)
+  }
   return (
     <HomeContainer>
       <Header>
-        <CatPotionsLogo classe={"row-logo"}/>
+        <CatStoreLogo classe={"row-logo"}/>
         <h1 onClick={()=>navigate("/login")}>Olá, Usuário</h1>
         <BiCart size={"30"} onClick={()=>setSideBar(true)}/>
         <BiExit />
@@ -23,78 +31,18 @@ export default function HomePage() {
 
       <ProductsContainer>
         <ul>
-          <ListItemContainer>
-            <div>
-              <img src="https://i.pinimg.com/564x/90/3e/04/903e04af1b0ad325cd94d3b5319bbafa.jpg" alt=""/>
-              <strong>Nome do Produto</strong>
-            </div>
-            <Value>120,00</Value>
-            <button>Adicionar ao Carrinho</button>
-          </ListItemContainer>
-          <ListItemContainer>
-            <div>
-              <img src="https://i.pinimg.com/564x/90/3e/04/903e04af1b0ad325cd94d3b5319bbafa.jpg" alt=""/>
-              <strong>Nome do Produto</strong>
-            </div>
-            <Value>120,00</Value>
-            <button>Adicionar ao Carrinho</button>
-          </ListItemContainer>
-          <ListItemContainer>
-            <div>
-              <img src="https://i.pinimg.com/564x/90/3e/04/903e04af1b0ad325cd94d3b5319bbafa.jpg" alt=""/>
-              <strong>Nome do Produto</strong>
-            </div>
-            <Value>120,00</Value>
-            <button>Adicionar ao Carrinho</button>
-          </ListItemContainer>
-          <ListItemContainer>
-            <div>
-              <img src="https://i.pinimg.com/564x/90/3e/04/903e04af1b0ad325cd94d3b5319bbafa.jpg" alt=""/>
-              <strong>Nome do Produto</strong>
-            </div>
-            <Value>120,00</Value>
-            <button>Adicionar ao Carrinho</button>
-          </ListItemContainer>
-          <ListItemContainer>
-            <div>
-              <img src="https://i.pinimg.com/564x/90/3e/04/903e04af1b0ad325cd94d3b5319bbafa.jpg" alt=""/>
-              <strong>Nome do Produto</strong>
-            </div>
-            <Value>120,00</Value>
-            <button>Adicionar ao Carrinho</button>
-          </ListItemContainer>
-          <ListItemContainer>
-            <div>
-              <img src="https://i.pinimg.com/564x/90/3e/04/903e04af1b0ad325cd94d3b5319bbafa.jpg" alt=""/>
-              <strong>Nome do Produto</strong>
-            </div>
-            <Value>120,00</Value>
-            <button>Adicionar ao Carrinho</button>
-          </ListItemContainer>
-          <ListItemContainer>
-            <div>
-              <img src="https://i.pinimg.com/564x/90/3e/04/903e04af1b0ad325cd94d3b5319bbafa.jpg" alt=""/>
-              <strong>Nome do Produto</strong>
-            </div>
-            <Value>120,00</Value>
-            <button>Adicionar ao Carrinho</button>
-          </ListItemContainer>
-          <ListItemContainer>
-            <div>
-              <img src="https://i.pinimg.com/564x/90/3e/04/903e04af1b0ad325cd94d3b5319bbafa.jpg" alt=""/>
-              <strong>Nome do Produto</strong>
-            </div>
-            <Value>120,00</Value>
-            <button>Adicionar ao Carrinho</button>
-          </ListItemContainer>
-          <ListItemContainer>
-            <div>
-              <img src="https://i.pinimg.com/564x/90/3e/04/903e04af1b0ad325cd94d3b5319bbafa.jpg" alt=""/>
-              <strong>Nome do Produto</strong>
-            </div>
-            <Value>120,00</Value>
-            <button>Adicionar ao Carrinho</button>
-          </ListItemContainer>
+          {
+            produtos.map((product, i)=>(
+              <ListItemContainer key={i} onClick={clickItem} ref={cardRef}>
+                <div>
+                  <img src={product.image} alt=""/>
+                  <strong>{product.product}</strong>
+                </div>
+                <Value>R$ {product.value.toFixed(2).replace(".",",")}</Value>
+                <button>Adicionar ao Carrinho</button>
+              </ListItemContainer>
+            ))
+          }
           
         </ul>
       </ProductsContainer>
@@ -189,8 +137,14 @@ const ButtonsContainer = styled.section`
   }
 `
 const Value = styled.p`
-  font-size: 16px;
-  text-align: right;
+  font-size: 20px;
+  color: #fff;
+  background-color: #393e43;
+  border-radius: 15px;
+  width: 60%;
+  height: 50px;
+  padding: 7px;
+  text-align: center;
   font-weight: 700;
 `
 const ListItemContainer = styled.li`
@@ -214,7 +168,8 @@ const ListItemContainer = styled.li`
     gap: 5px;
 
     img{
-      width: 100%;
+      margin-top: 20px;
+      width: 190px;
       height: 200px;
       border-radius: 15px;
       object-fit: cover;

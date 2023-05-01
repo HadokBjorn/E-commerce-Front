@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import CatPotionsLogo from "../components/CatPotionsLogo"
+import CatStoreLogo from "../components/CatStoreLogo"
 import { useRef } from "react";
 
 export default function SignUpPage() {
@@ -48,7 +48,7 @@ export default function SignUpPage() {
   return (
     <SingUpContainer>
       <form onSubmit={register}>
-        <CatPotionsLogo />
+        <CatStoreLogo />
         <input placeholder="Nome" type="text" ref={userNameRef} />
         <input placeholder="E-mail" type="email" ref={emailRef} />
         <input placeholder="Endereço" type="text" ref={addressRef} />

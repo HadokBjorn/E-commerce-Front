@@ -1,11 +1,11 @@
 import styled from "styled-components"
 import imageLogo from "../assets/cat-logo.jpg"
 
-export default function CatPotionsLogo({classe}) {
+export default function CatStoreLogo({classe}) {
     return (
         <LogoContainer className={classe}>
             <img src={imageLogo} alt="logo"/>
-            <h1>CatPotions</h1>
+            <h1>CatStore</h1>
         </LogoContainer>
     )
 }

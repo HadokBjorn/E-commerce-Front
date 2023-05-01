@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { Link, useNavigate } from "react-router-dom"
-import CatPotionsLogo from "../components/CatPotionsLogo"
+import CatStoreLogo from "../components/CatStoreLogo"
 import { useRef } from "react";
 
 export default function SignInPage() {
@@ -38,7 +38,7 @@ export default function SignInPage() {
   return (
     <SingInContainer>
       <form onSubmit={login}>
-        <CatPotionsLogo />
+        <CatStoreLogo />
         <input placeholder="E-mail" type="email" ref={emailRef}/>
         <input placeholder="Senha" type="password" ref={passwordRef}
         autocomplete="new-password" />
