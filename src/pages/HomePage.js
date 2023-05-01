@@ -16,8 +16,8 @@ export default function HomePage() {
   //const [shoppingList, setShoppingList] = useState(null)
   const cardRef = useRef();
 
-  const clickItem = () => {
-    const cardSelected = cardRef.current;
+  const clickItem = product => {
+    const cardSelected = product;
     console.log(cardSelected)
   }
   return (
@@ -35,7 +35,7 @@ export default function HomePage() {
         <ul>
           {
             produtos.map((product, i) => (
-              <ListItemContainer key={i} onClick={clickItem} ref={cardRef}>
+              <ListItemContainer key={i} onClick={() => clickItem(product)} ref={cardRef}>
                 <div>
                   <img src={product.image} alt="" />
                   <strong>{product.product}</strong>
