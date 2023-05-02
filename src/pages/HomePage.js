@@ -30,6 +30,7 @@ export default function HomePage() {
     axios.post(url, { name: product.product, value: product.value }, config)
       .then((res) => {
         console.log(res);
+        alert(`${product.product} adicionado ao carrinho`)
       })
       .catch((err) => {
         console.log(err);
@@ -211,4 +212,9 @@ const ListItemContainer = styled.li`
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
   }
+  button:hover{
+    background-color: greenyellow;
+    color: green;
+  }
+  
 `
