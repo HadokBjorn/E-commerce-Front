@@ -18,12 +18,6 @@ export default function ShoppingBagSidebar({ setSideBar }) {
         .catch(err => console.log(err))
   },[render])
 
-  const buyProducts = (e) => {
-    e.preventDefault()
-    alert("Compra realizada com sucesso")
-    setSideBar(false)
-  }
-
   const deleteProduct = (id) => {
     console.log(id)
     axios.delete(`${process.env.REACT_APP_API_URL}/shopping/${id}`, config)
@@ -32,6 +26,19 @@ export default function ShoppingBagSidebar({ setSideBar }) {
         console.log(res)
       })
       .catch((err)=> console.log(err))
+  }
+
+  const buyProducts = (e) => {
+    e.preventDefault()
+    axios.put(`${process.env.REACT_APP_API_URL}/buy-product`,{}, config)
+      .then((res)=>{
+        alert(res.data)
+        setSideBar(false)
+      })
+      .catch((err)=>{
+        console.log(err)
+        setSideBar(false)
+      })
   }
 
 
