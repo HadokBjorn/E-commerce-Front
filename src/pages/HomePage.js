@@ -1,22 +1,28 @@
 import styled from "styled-components"
 import { BiCart, BiExit } from "react-icons/bi"
-import greenPotion from "../assets/green-potion.jpg"
-import purpplePotion from "../assets/purpple-potion.jpg"
+//import greenPotion from "../assets/green-potion.jpg"
+//import purpplePotion from "../assets/purpple-potion.jpg"
 import CatStoreLogo from "../components/CatStoreLogo"
 import ShoppingBagSidebar from "../components/ShoppingBagSidebar"
 import { useNavigate } from "react-router-dom"
-import { useRef, useState } from "react"
-import produtos from "../mock/mock"
+import { useEffect, useRef, useState } from "react"
 import axios from "axios"
+import Loader from "../components/Loader"
 
 export default function HomePage() {
   const token = localStorage.getItem("token");
   const userName = localStorage.getItem("userName");
   const [sideBar, setSideBar] = useState(false);
   const navigate = useNavigate();
-
-  
   const cardRef = useRef();
+  const [products, setProducts] = useState(null)
+  useEffect(()=>{
+    axios.get(`${process.env.REACT_APP_API_URL}/products`)
+      .then((res)=>{
+        setProducts(res.data)
+      })
+      .catch(err=>console.log(err))
+  },[])
 
   const request = (product) => {
     const url = `${process.env.REACT_APP_API_URL}/shopping`;
@@ -54,8 +60,8 @@ export default function HomePage() {
 
       <ProductsContainer>
         <ul>
-          {
-            produtos.map((product, i) => (
+          {products!==null?
+            products.map((product, i) => (
               <ListItemContainer key={i}  ref={cardRef}>
                 <div>
                   <img src={product.image} alt="" />
@@ -64,7 +70,7 @@ export default function HomePage() {
                 <Value>R$ {product.value.toFixed(2).replace(".", ",")}</Value>
                 <button onClick={() => clickItem(product)}>Adicionar ao Carrinho</button>
               </ListItemContainer>
-            ))
+            )):<Loader/>
           }
 
         </ul>
@@ -132,7 +138,7 @@ const ProductsContainer = styled.article`
   gap: 15px;
  }
 `
-const ButtonsContainer = styled.section`
+/* const ButtonsContainer = styled.section`
   margin-top: 15px;
   margin-bottom: 0;
   display: flex;
@@ -158,7 +164,7 @@ const ButtonsContainer = styled.section`
       text-align: center;
     }
   }
-`
+` */
 const Value = styled.p`
   font-size: 20px;
   color: #fff;
