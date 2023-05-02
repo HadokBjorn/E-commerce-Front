@@ -2,12 +2,15 @@ import { useEffect, useState } from "react"
 import { BiCart, BiTrash, BiXCircle } from "react-icons/bi"
 import styled from "styled-components"
 import axios from "axios"
+import { ThreeDots } from "react-loader-spinner";
 
 export default function ShoppingBagSidebar({ setSideBar }) {
   const [cartProducts, setCartProducts] = useState([]);
   const token = localStorage.getItem("token");
   const config = { headers: { Authorization: `Bearer ${token}` } };
   const [render, setRender] = useState();
+  const [loadingDelete, setLoadingDelete] = useState(false)
+  const [loadingBuy, setLoadingBuy] = useState(false)
   
   useEffect(()=>{
       axios.get(`${process.env.REACT_APP_API_URL}/shopping`, config)
@@ -19,25 +22,30 @@ export default function ShoppingBagSidebar({ setSideBar }) {
   },[render])
 
   const deleteProduct = (id) => {
-    console.log(id)
+    setLoadingDelete(true)
     axios.delete(`${process.env.REACT_APP_API_URL}/shopping/${id}`, config)
       .then((res)=>{
         setRender(id)
+        setLoadingDelete(false)
         console.log(res)
       })
       .catch((err)=> console.log(err))
+      setLoadingDelete(false)
   }
 
   const buyProducts = (e) => {
+    setLoadingBuy(true)
     e.preventDefault()
     axios.put(`${process.env.REACT_APP_API_URL}/buy-product`,{}, config)
       .then((res)=>{
         alert(res.data)
         setSideBar(false)
+        setLoadingBuy(false)
       })
       .catch((err)=>{
         console.log(err)
         setSideBar(false)
+        setLoadingBuy(false)
       })
   }
 
@@ -57,14 +65,38 @@ export default function ShoppingBagSidebar({ setSideBar }) {
               <CardProduct key={product._id}>
                 <h2>{product.name}</h2>
                 <p>R$ {(product.value).toString().replace(".", ",")}</p>
-                <BiTrash size={"22"} color="red" onClick={()=>deleteProduct(product._id)}/>
+                {loadingDelete?
+                <ThreeDots 
+                  height="30" 
+                  width="40" 
+                  radius="5"
+                  color="#4fa94d" 
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClassName=""
+                  visible={true}
+                />:
+                <BiTrash size={"22"} color="red" onClick={()=>deleteProduct(product._id)}/>}
               </CardProduct>
             )
           }) :<CardProduct >Nenhum produto adicionado no carrinho ainda</CardProduct> }
 
         </ul>
 
-        <button type="submit" disabled={cartProducts.length!==0?false:true}>FINALIZAR COMPRA</button>
+        <button type="submit" disabled={cartProducts.length!==0?false:true}>
+          {loadingBuy?
+          <ThreeDots 
+          height="30" 
+          width="80" 
+          radius="10"
+          color="#4fa94d" 
+          ariaLabel="three-dots-loading"
+          wrapperStyle={{}}
+          wrapperClassName=""
+          visible={true}
+          />:
+        "FINALIZAR COMPRA"}
+        </button>
       </form>
     </ShoppingBagContainer>
   )
@@ -121,10 +153,17 @@ const ShoppingBagContainer = styled.main`
     button{
       position: absolute;
       bottom:0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-  }
-  button:disabled{
-    background-color: grey;
+    button:disabled{
+      background-color: grey;
+    }
+    button:hover, button:focus{
+      background-color: greenyellow;
+      color: green;
+    }
   }
   
 `

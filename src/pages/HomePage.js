@@ -1,18 +1,17 @@
 import styled from "styled-components"
 import { BiCart, BiExit } from "react-icons/bi"
-//import greenPotion from "../assets/green-potion.jpg"
-//import purpplePotion from "../assets/purpple-potion.jpg"
 import CatStoreLogo from "../components/CatStoreLogo"
 import ShoppingBagSidebar from "../components/ShoppingBagSidebar"
 import { useNavigate } from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
 import axios from "axios"
-import Loader from "../components/Loader"
+import { ProgressBar, ThreeDots } from "react-loader-spinner"
 
 export default function HomePage() {
   const token = localStorage.getItem("token");
   const userName = localStorage.getItem("userName");
   const [sideBar, setSideBar] = useState(false);
+  const [loadingBuy, setLoadingBuy] = useState({value: false, name: ""})
   const navigate = useNavigate();
   const cardRef = useRef();
   const [products, setProducts] = useState(null)
@@ -25,15 +24,18 @@ export default function HomePage() {
   },[])
 
   const request = (product) => {
+    setLoadingBuy({value: true, name: product.product})
     const url = `${process.env.REACT_APP_API_URL}/shopping`;
     const config = { headers: { Authorization: `Bearer ${token}` } };
     axios.post(url, { name: product.product, value: product.value }, config)
       .then((res) => {
         console.log(res);
+        setLoadingBuy({value: false, name: product.product})
         alert(`${product.product} adicionado ao carrinho`)
       })
       .catch((err) => {
         console.log(err);
+        setLoadingBuy({value: false, name: product.product})
       })
   }
 
@@ -69,9 +71,31 @@ export default function HomePage() {
                   <strong>{product.product}</strong>
                 </div>
                 <Value>R$ {product.value.toFixed(2).replace(".", ",")}</Value>
-                <button onClick={() => clickItem(product)}>Adicionar ao Carrinho</button>
+                {loadingBuy.value===true && product.product === loadingBuy.name?
+                <button>
+                  <ThreeDots 
+                  height="25" 
+                  width="50" 
+                  radius="10"
+                  color="#4fa94d" 
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClassName=""
+                  visible={true}
+                />
+                </button>:
+              <button onClick={() => clickItem(product)}>Adicionar ao Carrinho</button>}
               </ListItemContainer>
-            )):<Loader/>
+            )):
+            <ProgressBar
+            height="80"
+            width="80"
+            ariaLabel="progress-bar-loading"
+            wrapperStyle={{}}
+            wrapperClass="progress-bar-wrapper"
+            borderColor = '#fff'
+            barColor = 'green'
+            />
           }
 
         </ul>
@@ -80,11 +104,11 @@ export default function HomePage() {
 
       {/* <ButtonsContainer>
         <button>
-          <img src={greenPotion} alt="" />
+          <img src="" alt="" />
           <p>ITENS ENCANTADOS</p>
         </button>
         <button>
-          <img src={purpplePotion} alt="" />
+          <img src="" alt="" />
           <p>RELIQUIAS ALMADIÇOADAS</p>
         </button>
       </ButtonsContainer> */}
