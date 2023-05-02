@@ -35,6 +35,11 @@ export default function HomePage() {
     request(product);
   }
 
+  const logout = () => {
+    localStorage.clear();
+    navigate("/login")
+  }
+
  
   return (
     <HomeContainer>
@@ -42,7 +47,7 @@ export default function HomePage() {
         <CatStoreLogo classe={"row-logo"} />
         <h1 onClick={() => navigate("/login")}>Olá, {userName ? userName : "Usuário"}</h1>
         <BiCart size={"30"} onClick={() => setSideBar(true)} />
-        <BiExit />
+        <BiExit onClick={logout} />
       </Header>
       {sideBar === true ? <ShoppingBagSidebar setSideBar={setSideBar} /> : ""}
 
@@ -66,7 +71,7 @@ export default function HomePage() {
       </ProductsContainer>
 
 
-      <ButtonsContainer>
+      {/* <ButtonsContainer>
         <button>
           <img src={greenPotion} alt="" />
           <p>ITENS ENCANTADOS</p>
@@ -75,7 +80,7 @@ export default function HomePage() {
           <img src={purpplePotion} alt="" />
           <p>RELIQUIAS ALMADIÇOADAS</p>
         </button>
-      </ButtonsContainer>
+      </ButtonsContainer> */}
 
     </HomeContainer>
   )

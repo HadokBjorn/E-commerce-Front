@@ -5,22 +5,33 @@ import axios from "axios"
 
 export default function ShoppingBagSidebar({ setSideBar }) {
   const [cartProducts, setCartProducts] = useState([]);
+  const token = localStorage.getItem("token");
+  const config = { headers: { Authorization: `Bearer ${token}` } };
+  const [render, setRender] = useState();
   
   useEffect(()=>{
-    const token = localStorage.getItem("token");
-    const config = { headers: { Authorization: `Bearer ${token}` } };
       axios.get(`${process.env.REACT_APP_API_URL}/shopping`, config)
         .then(res => {
           setCartProducts(res.data)
           console.log(res.data);
         })
         .catch(err => console.log(err))
-  },[])
+  },[render])
 
   const buyProducts = (e) => {
     e.preventDefault()
     alert("Compra realizada com sucesso")
     setSideBar(false)
+  }
+
+  const deleteProduct = (id) => {
+    console.log(id)
+    axios.delete(`${process.env.REACT_APP_API_URL}/shopping/${id}`, config)
+      .then((res)=>{
+        setRender(id)
+        console.log(res)
+      })
+      .catch((err)=> console.log(err))
   }
 
 
@@ -39,7 +50,7 @@ export default function ShoppingBagSidebar({ setSideBar }) {
               <CardProduct key={product._id}>
                 <h2>{product.name}</h2>
                 <p>R$ {(product.value).toString().replace(".", ",")}</p>
-                <BiTrash size={"22"} color="red" />
+                <BiTrash size={"22"} color="red" onClick={()=>deleteProduct(product._id)}/>
               </CardProduct>
             )
           }) :<CardProduct >Nenhum produto adicionado no carrinho ainda</CardProduct> }
