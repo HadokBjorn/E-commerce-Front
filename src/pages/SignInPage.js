@@ -1,12 +1,10 @@
 import styled from "styled-components"
 import { Link, useNavigate } from "react-router-dom"
 import CatStoreLogo from "../components/CatStoreLogo"
-import { useContext, useRef } from "react";
+import { useRef } from "react";
 import axios from "axios";
-import AuthContext from "../constexts/AuthContext";
 
 export default function SignInPage() {
-  const { setToken, setUserName } = useContext(AuthContext);
   const navigate = useNavigate();
   const form = { email: "", password: "" }
   const emailRef = useRef("");
@@ -21,8 +19,7 @@ export default function SignInPage() {
     const url = `${process.env.REACT_APP_API_URL}/login`;
     axios.post(url, form)
       .then((res) => {
-        setToken(res.data.token);
-        setUserName(res.data.userName);
+        localStorage.setItem("userName", res.data.userName);
         localStorage.setItem("token", res.data.token);
         navigate("/");
       })
@@ -44,7 +41,7 @@ export default function SignInPage() {
         <CatStoreLogo />
         <input placeholder="E-mail" type="email" ref={emailRef} />
         <input placeholder="Senha" type="password" ref={passwordRef}
-          autocomplete="new-password" />
+          autoComplete="new-password" />
         <button type="submit" >Entrar</button>
       </form>
 

@@ -5,37 +5,22 @@ import purpplePotion from "../assets/purpple-potion.jpg"
 import CatStoreLogo from "../components/CatStoreLogo"
 import ShoppingBagSidebar from "../components/ShoppingBagSidebar"
 import { useNavigate } from "react-router-dom"
-import { useContext, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import produtos from "../mock/mock"
-import AuthContext from "../constexts/AuthContext"
 import axios from "axios"
 
 export default function HomePage() {
-  const { token } = useContext(AuthContext);
-  const config = { headers: { Authorization: `Bearer ${token}` } };
-  const navigate = useNavigate();
-  const { userName } = useContext(AuthContext);
+  const token = localStorage.getItem("token");
+  const userName = localStorage.getItem("userName");
   const [sideBar, setSideBar] = useState(false);
-  const [cartProducts, setCartProducts] = useState(undefined);
-  //const [shoppingList, setShoppingList] = useState(null)
+  const navigate = useNavigate();
+
+  
   const cardRef = useRef();
 
-  const clickItem = product => {
-    if (!userName) return navigate("/login");
-    request(product);
-
-    axios.get(`${process.env.REACT_APP_API_URL}/shopping`, config)
-      .then(res => {
-        setCartProducts(res.data)
-        console.log(res.data);
-      })
-      .catch(err => console.log(err))
-
-  }
-
   const request = (product) => {
-    const config = { headers: { Authorization: `Bearer ${token}` } }
     const url = `${process.env.REACT_APP_API_URL}/shopping`;
+    const config = { headers: { Authorization: `Bearer ${token}` } };
     axios.post(url, { name: product.product, value: product.value }, config)
       .then((res) => {
         console.log(res);
@@ -44,6 +29,13 @@ export default function HomePage() {
         console.log(err);
       })
   }
+
+  const clickItem = product => {
+    if (!userName) return navigate("/login");
+    request(product);
+  }
+
+ 
   return (
     <HomeContainer>
       <Header>
@@ -52,20 +44,20 @@ export default function HomePage() {
         <BiCart size={"30"} onClick={() => setSideBar(true)} />
         <BiExit />
       </Header>
-      {sideBar === true ? <ShoppingBagSidebar cartProducts={cartProducts} setSideBar={setSideBar} /> : ""}
+      {sideBar === true ? <ShoppingBagSidebar setSideBar={setSideBar} /> : ""}
 
 
       <ProductsContainer>
         <ul>
           {
             produtos.map((product, i) => (
-              <ListItemContainer key={i} onClick={() => clickItem(product)} ref={cardRef}>
+              <ListItemContainer key={i}  ref={cardRef}>
                 <div>
                   <img src={product.image} alt="" />
                   <strong>{product.product}</strong>
                 </div>
                 <Value>R$ {product.value.toFixed(2).replace(".", ",")}</Value>
-                <button>Adicionar ao Carrinho</button>
+                <button onClick={() => clickItem(product)}>Adicionar ao Carrinho</button>
               </ListItemContainer>
             ))
           }

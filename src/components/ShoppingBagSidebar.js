@@ -1,18 +1,27 @@
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { BiCart, BiTrash, BiXCircle } from "react-icons/bi"
 import styled from "styled-components"
-import AuthContext from "../constexts/AuthContext"
 import axios from "axios"
 
-export default function ShoppingBagSidebar({ setSideBar, cartProducts }) {
+export default function ShoppingBagSidebar({ setSideBar }) {
+  const [cartProducts, setCartProducts] = useState([]);
+  
+  useEffect(()=>{
+    const token = localStorage.getItem("token");
+    const config = { headers: { Authorization: `Bearer ${token}` } };
+      axios.get(`${process.env.REACT_APP_API_URL}/shopping`, config)
+        .then(res => {
+          setCartProducts(res.data)
+          console.log(res.data);
+        })
+        .catch(err => console.log(err))
+  },[])
+
   const buyProducts = (e) => {
     e.preventDefault()
     alert("Compra realizada com sucesso")
     setSideBar(false)
   }
-  const { token } = useContext(AuthContext);
-
-  const config = { headers: { Authorization: `Bearer ${token}` } };
 
 
   return (
@@ -25,7 +34,7 @@ export default function ShoppingBagSidebar({ setSideBar, cartProducts }) {
       </h1>
       <form onSubmit={buyProducts}>
         <ul>
-          {cartProducts ? cartProducts.map(product => {
+          {cartProducts.length !== 0 ? cartProducts.map(product => {
             return (
               <CardProduct key={product._id}>
                 <h2>{product.name}</h2>
@@ -33,11 +42,11 @@ export default function ShoppingBagSidebar({ setSideBar, cartProducts }) {
                 <BiTrash size={"22"} color="red" />
               </CardProduct>
             )
-          }) : ""}
+          }) :<CardProduct >Nenhum produto adicionado no carrinho ainda</CardProduct> }
 
         </ul>
 
-        <button type="submit">FINALIZAR COMPRA</button>
+        <button type="submit" disabled={cartProducts.length!==0?false:true}>FINALIZAR COMPRA</button>
       </form>
     </ShoppingBagContainer>
   )
@@ -72,14 +81,32 @@ const ShoppingBagContainer = styled.main`
     align-items: center;
     justify-content: center;
   }
-  ul{
-    gap: 10px;
-    margin-top: 20px;
-    width: inherit;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center ;
+  form{
+    position: relative;
+    height: 100%;
+    overflow: auto;
+
+    ul{
+      position: absolute;
+      overflow:auto;
+      gap: 10px;
+      top: 0px;
+      bottom: 60px;
+      width: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: center ;
+
+      //max-height: calc(100vh-100px);
+    }
+    button{
+      position: absolute;
+      bottom:0;
+    }
+  }
+  button:disabled{
+    background-color: grey;
   }
   
 `
@@ -93,6 +120,7 @@ const CardProduct = styled.li`
   justify-content: space-between;
   h2{
     font-weight: 700;
+    width: 40%;
   }
   p{
     font-size: larger;
