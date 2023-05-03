@@ -24,4 +24,7 @@ const PagesContainer = styled.main`
   width: inherit;
   max-height: 100vh;
   padding: 25px;
+  div::-webkit-scrollbar{
+    display: none;
+  }
 `
