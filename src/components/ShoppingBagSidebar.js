@@ -9,28 +9,31 @@ export default function ShoppingBagSidebar({ setSideBar }) {
   const token = localStorage.getItem("token");
   const config = { headers: { Authorization: `Bearer ${token}` } };
   const [render, setRender] = useState();
-  const [loadingDelete, setLoadingDelete] = useState(false)
+  const [loadingDelete, setLoadingDelete] = useState({value:false, id:""})
   const [loadingBuy, setLoadingBuy] = useState(false)
   
   useEffect(()=>{
       axios.get(`${process.env.REACT_APP_API_URL}/shopping`, config)
         .then(res => {
           setCartProducts(res.data)
-          console.log(res.data);
         })
         .catch(err => console.log(err))
   },[render])
 
   const deleteProduct = (id) => {
-    setLoadingDelete(true)
+
+    setLoadingDelete({value: true, id})
+
     axios.delete(`${process.env.REACT_APP_API_URL}/shopping/${id}`, config)
       .then((res)=>{
         setRender(id)
-        setLoadingDelete(false)
+        setLoadingDelete({value: false, id})
         console.log(res)
       })
-      .catch((err)=> console.log(err))
-      setLoadingDelete(false)
+      .catch((err)=> {
+        console.log(err)
+        setLoadingDelete({value: false, id})
+      })
   }
 
   const buyProducts = (e) => {
@@ -65,7 +68,7 @@ export default function ShoppingBagSidebar({ setSideBar }) {
               <CardProduct key={product._id}>
                 <h2>{product.name}</h2>
                 <p>R$ {(product.value).toString().replace(".", ",")}</p>
-                {loadingDelete?
+                {loadingDelete.value && loadingDelete.id === product._id?
                 <ThreeDots 
                   height="30" 
                   width="40" 
