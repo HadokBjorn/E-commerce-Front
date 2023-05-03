@@ -16,6 +16,7 @@ export default function ShoppingBagSidebar({ setSideBar }) {
       axios.get(`${process.env.REACT_APP_API_URL}/shopping`, config)
         .then(res => {
           setCartProducts(res.data)
+          setLoadingDelete({value: false,...loadingDelete.id})
         })
         .catch(err => console.log(err))
   },[render])
@@ -27,7 +28,6 @@ export default function ShoppingBagSidebar({ setSideBar }) {
     axios.delete(`${process.env.REACT_APP_API_URL}/shopping/${id}`, config)
       .then((res)=>{
         setRender(id)
-        setLoadingDelete({value: false, id})
         console.log(res)
       })
       .catch((err)=> {

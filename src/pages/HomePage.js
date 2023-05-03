@@ -36,11 +36,14 @@ export default function HomePage() {
       .catch((err) => {
         console.log(err);
         setLoadingBuy({value: false, name: product.product})
+        localStorage.clear()
+        alert("Sessão expirada, faça login novamente!")
+        navigate("/login")
       })
   }
 
   const clickItem = product => {
-    if (!userName) return navigate("/login");
+    if (!userName&&!token) return navigate("/login");
     request(product);
   }
 
