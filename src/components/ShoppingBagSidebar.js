@@ -149,8 +149,9 @@ const ShoppingBagContainer = styled.main`
       flex-direction: column;
       justify-content: start;
       align-items: center ;
-
-      //max-height: calc(100vh-100px);
+    }
+    ul::-webkit-scrollbar{
+      display: none;
     }
     button{
       position: absolute;
