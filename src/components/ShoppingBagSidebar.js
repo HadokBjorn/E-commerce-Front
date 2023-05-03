@@ -79,10 +79,12 @@ export default function ShoppingBagSidebar({ setSideBar }) {
                 <BiTrash size={"22"} color="red" onClick={()=>deleteProduct(product._id)}/>}
               </CardProduct>
             )
-          }) :<CardProduct >Nenhum produto adicionado no carrinho ainda</CardProduct> }
-
+          }):<CardProduct >Nenhum produto adicionado no carrinho ainda</CardProduct> }
         </ul>
-
+          {cartProducts.length !== 0 ?
+          <TotalCard>
+            <p>TOTAL: <h3>R$ {cartProducts.map(p=>p.value).reduce((acc, curr)=> acc + curr).toFixed(2).replace(".",",")}</h3></p>
+          </TotalCard>:""}
         <button type="submit" disabled={cartProducts.length!==0?false:true}>
           {loadingBuy?
           <ThreeDots 
@@ -141,7 +143,7 @@ const ShoppingBagContainer = styled.main`
       overflow:auto;
       gap: 10px;
       top: 0px;
-      bottom: 60px;
+      bottom: 100px;
       width: inherit;
       display: flex;
       flex-direction: column;
@@ -186,4 +188,33 @@ const CardProduct = styled.li`
 
   }
 
+`
+const TotalCard = styled.div`
+  position: absolute;
+  bottom: 60px;
+  width: 90%;
+  height: 30px;
+  color: #0c1d07;
+  background-color: #9dd295;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+
+    font-size: 20px;
+    font-family: 'Saira Stencil One', cursive;
+    font-weight: 700;
+    text-align: center;
+
+    /* h3{
+      color: green;
+    } */
+  }
 `
