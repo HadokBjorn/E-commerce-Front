@@ -1,3 +1,26 @@
+# Cat Store
+
+## About App
+
+<img src='./src/assets/sign-up.gif'>
+
+The CatStore app is an original project created with MongoDB and React that simulates the basic functionality of an e-commerce platform selling products for cat owners.
+
+The app allows users to browse the product catalog without logging in, but when they try to purchase a product, they are redirected to the login screen.
+
+If the user doesn't have an account, they can register by clicking on the "Primeira vez? Cadastre-se!" text, which will redirect them to the registration screen.
+
+<img src='./src/assets/shopping.gif'>
+
+After registration, the customer can select the products they are interested in and add them to their shopping cart.
+
+By clicking on the "shopping cart" icon, the user can view the list of selected products and the total value of their purchase.
+
+<img src='./src/assets/adaptation-screen.gif'>
+
+Access the application through this link https://cat-store-ecommerce.vercel.app/ ; it may take a while to load as the hosting platform provides limited resources in the free version.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
